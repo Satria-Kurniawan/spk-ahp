@@ -32,10 +32,16 @@
                                     <label>{{ $kriteria->nama }}</label>
                                     <select class="w-100" name="{{ $kriteria->nama }}">
                                         @foreach ($dataSubkriteria->where('id_kriteria', $kriteria->id) as $subkriteria)
-                                            <option value="{{ $subkriteria->nama }}"
-                                                {{ $alternatif->data[$kriteria->nama] === $subkriteria->nama ? 'selected' : '' }}>
-                                                {{ $subkriteria->nama }}
-                                            </option>
+                                            @if (is_array($alternatif->data) && array_key_exists($kriteria->nama, $alternatif->data))
+                                                <option value="{{ $subkriteria->nama }}"
+                                                    {{ $alternatif->data[$kriteria->nama] === $subkriteria->nama ? 'selected' : '' }}>
+                                                    {{ $subkriteria->nama }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $subkriteria->nama }}">
+                                                    {{ $subkriteria->nama }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

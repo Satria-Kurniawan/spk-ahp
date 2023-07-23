@@ -53,20 +53,25 @@
                             foreach ($dataNilaiPrioritasSubkriteria as &$subArray) {
                                 $subArray = array_values($subArray);
                             }
+                            
+                            // dd($matriksNilaiPrioritasSubkriteria);
+                            
                         @endphp
 
                         @foreach ($dataNilaiPrioritasSubkriteria as $indexA => $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $dataKategori[$loop->index]->nama }}</td>
-                                @foreach ($item as $indexB => $value)
-                                    <td>
-                                        @isset($dataNilaiPrioritasSubkriteria[$indexB][$indexA])
-                                            {{ $dataNilaiPrioritasSubkriteria[$indexB][$indexA] }}
-                                        @endisset
-                                    </td>
-                                @endforeach
-                            </tr>
+                            @if (isset($dataKategori[$loop->index]))
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $dataKategori[$loop->index]->nama }}</td>
+                                    @foreach ($dataNilaiPrioritasSubkriteria as $indexB => $value)
+                                        <td>
+                                            @isset($dataNilaiPrioritasSubkriteria[$indexB][$indexA])
+                                                {{ $dataNilaiPrioritasSubkriteria[$indexB][$indexA] }}
+                                            @endisset
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -92,6 +97,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- {{ dd($hasilAkhir) }} --}}
                         @foreach ($hasilAkhir as $hasilNilaiKriteria)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>

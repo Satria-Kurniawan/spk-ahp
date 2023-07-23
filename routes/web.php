@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
+use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\PerbandinganKriteriaController;
 use App\Http\Controllers\PerbandinganAlternatifController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AtletController;
 use App\Http\Controllers\DataAtletController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MatriksBerpasanganController;
 use App\Http\Controllers\MatriksBerpasanganSubkriteriaController;
@@ -33,7 +35,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/kriteria/data', [KriteriaController::class, 'getDataKriteria'])->name('kriteria.data');
 Route::get('/kriteria/create', [KriteriaController::class, 'createKriteria'])->name('kriteria.create');
@@ -67,5 +69,9 @@ Route::post('/alternatif/store', [AlternatifController::class, 'storeAlternatif'
 Route::get('/alternatif/edit/{id}', [AlternatifController::class, 'editAlternatif'])->name('alternatif.edit');
 Route::post('/alternatif/update/{id}', [AlternatifController::class, 'updateAlternatif'])->name('alternatif.update');
 Route::get('/alternatif/delete/{id}', [AlternatifController::class, 'deleteAlternatif'])->name('alternatif.delete');
+
+Route::get('/atlet/create', [AthleteController::class, 'createAtlet'])->name('atlet.create');
+Route::post('/atlet/store', [AthleteController::class, 'storeAtlet'])->name('atlet.store');
+Route::get('/atlet/data', [AthleteController::class, 'getDataRekapan'])->name('atlet.data');
 
 Route::get('/perhitungan/data', [PerhitunganController::class, 'getDataPerhitungan'])->name('perhitungan.data');

@@ -23,7 +23,7 @@
                     @csrf
                     <div class="form-group">
                         <label>Nama Alternatif</label>
-                        <input type="text" class="form-control" name="nama">
+                        <input type="text" class="form-control" name="nama" placeholder="Nama alternatif..." />
                     </div>
                     <div class="row">
                         @foreach ($dataKriteria as $kriteria)

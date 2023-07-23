@@ -32,7 +32,7 @@
             id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -44,9 +44,12 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span class="{{ Route::is('dashboard') ? 'text-white font-weight-bold' : '' }}">
+                        Dashboard
+                    </span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -90,6 +93,22 @@
                     <i class="fas fa-fw fa-wrench"></i>
                     <span class="{{ Route::is('perhitungan.data') ? 'text-white font-weight-bold' : '' }}">
                         Data Perhitungan
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('atlet.create') }}">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span class="{{ Route::is('atlet.create') ? 'text-white font-weight-bold' : '' }}">
+                        Input Atlet
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('atlet.data') }}">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span class="{{ Route::is('atlet.data') ? 'text-white font-weight-bold' : '' }}">
+                        Hasil Rekapan Atlet
                     </span>
                 </a>
             </li>

@@ -28,16 +28,6 @@ class PerhitunganController extends Controller
         $dataSubkriteria = SubKriteria::all();
         $matriksBerpasanganSK = MatriksBerpasanganSubkriteria::all();
 
-        // $matriksNilaiPrioritasSubkriteria = [];
-
-        // foreach ($dataKriteria as $index => $kriteria) {
-        //     $jumlahPerKolomSK = hitungJumlahPerkolomMatriksBerpasangan($dataSubkriteria, $kriteria->id, $matriksBerpasanganSK);
-        //     $resultMatriksNilaiSubkriteria = hitungMatriksNilaiKriteria($dataSubkriteria, $kriteria->id, $matriksBerpasanganSK, $jumlahPerKolomSK);
-        //     $nilaiPrioritasSubkriteria = $resultMatriksNilaiSubkriteria['nilaiPrioritasSubkriteria'];
-
-        //     $matriksNilaiPrioritasSubkriteria[$index] = $nilaiPrioritasSubkriteria;
-        // }
-
         $matriksNilaiPrioritasSubkriteria = [];
 
         foreach ($dataKriteria as $index => $kriteria) {
@@ -46,9 +36,6 @@ class PerhitunganController extends Controller
             $nilaiPrioritasSubkriteria = $resultMatriksNilaiSubkriteria['nilaiPrioritasSubkriteria'];
 
             $keySubkriteria = $dataSubkriteria->where('id_kriteria', $kriteria->id)->values();
-            // $matriksNilaiPrioritasSubkriteria[$kriteria->nama] = [
-            //     $keySubkriteria[$index]->nama => $nilaiPrioritasSubkriteria[$index]
-            // ];
 
             $col = [];
             foreach ($nilaiPrioritasSubkriteria as $indexPS => $value) {
@@ -61,26 +48,31 @@ class PerhitunganController extends Controller
 
         // dd($matriksNilaiPrioritasSubkriteria);
 
+
+        $newMatriksNilaiPrioritasSubkriteria = [];
+
+        foreach ($matriksNilaiPrioritasSubkriteria as $kriteria => $nilaiSubkriteria) {
+            // Jika key memiliki dua kata, ganti spasi dengan underscore
+            $key = str_replace(' ', '_', $kriteria);
+            $newMatriksNilaiPrioritasSubkriteria[$key] = $nilaiSubkriteria;
+        }
+
         // PERHITUNGAN ALTERNATIF
         $dataAlternatif = Alternatif::all();
 
-        // dd($matriksNilaiPrioritasSubkriteria, $dataAlternatif->toArray());
+        // dd($newMatriksNilaiPrioritasSubkriteria, $dataAlternatif->toArray());
 
         $hasil = [];
 
         foreach ($dataAlternatif as $alternatif) {
             $nilaiSubkriteria = [];
 
-            foreach ($alternatif['data'] as $key => $value) {
-                if (isset($matriksNilaiPrioritasSubkriteria[$key][$value])) {
-                    $nilaiSubkriteria[$key] = $matriksNilaiPrioritasSubkriteria[$key][$value];
-                }
+            foreach ($alternatif['data'] as $kriteria => $nilaiKriteria) {
+                $nilaiSubkriteria[$kriteria] = $newMatriksNilaiPrioritasSubkriteria[$kriteria][$nilaiKriteria];
             }
 
             $hasil[] = $nilaiSubkriteria;
         }
-
-        // dd($hasil, $nilaiPrioritas);
 
         $hasilAkhir = [];
 
@@ -194,5 +186,94 @@ class PerhitunganController extends Controller
             'jumlahPerBaris' => $jumlahPerBaris,
             'nilaiPrioritas' => $nilaiPrioritas
         ];
+    }
+
+    public static function hitungNilaiRekomendasi(){
+        // MATRIKS NILAI PRIORITAS KRITERIA
+        $dataKriteria = Kriteria::all();
+        $matriksBerpasangan = MatriksBerpasangan::all();
+
+        $jumlahPerKolom = PerhitunganController::hitungJumlahPerkolom($dataKriteria, $matriksBerpasangan);
+        $resultMatriksNilaiKriteria = PerhitunganController::hitungMatriksNilaiKriteria($dataKriteria, $matriksBerpasangan, $jumlahPerKolom);
+        $nilaiPrioritas = $resultMatriksNilaiKriteria['nilaiPrioritas'];
+        // END
+
+        //MATRIKS NILAI PRIORITAS SUBKRITERIA
+        $dataSubkriteria = SubKriteria::all();
+        $matriksBerpasanganSK = MatriksBerpasanganSubkriteria::all();
+
+        $matriksNilaiPrioritasSubkriteria = [];
+
+        foreach ($dataKriteria as $index => $kriteria) {
+            $jumlahPerKolomSK = hitungJumlahPerkolomMatriksBerpasangan($dataSubkriteria, $kriteria->id, $matriksBerpasanganSK);
+            $resultMatriksNilaiSubkriteria = hitungMatriksNilaiKriteria($dataSubkriteria, $kriteria->id, $matriksBerpasanganSK, $jumlahPerKolomSK);
+            $nilaiPrioritasSubkriteria = $resultMatriksNilaiSubkriteria['nilaiPrioritasSubkriteria'];
+
+            $keySubkriteria = $dataSubkriteria->where('id_kriteria', $kriteria->id)->values();
+
+            $col = [];
+            foreach ($nilaiPrioritasSubkriteria as $indexPS => $value) {
+                $col[$keySubkriteria[$indexPS]->nama] = $value;
+            }
+
+            $matriksNilaiPrioritasSubkriteria[$kriteria->nama] = $col;
+        }
+        // END
+
+        // dd($matriksNilaiPrioritasSubkriteria);
+
+
+        $newMatriksNilaiPrioritasSubkriteria = [];
+
+        foreach ($matriksNilaiPrioritasSubkriteria as $kriteria => $nilaiSubkriteria) {
+            // Jika key memiliki dua kata, ganti spasi dengan underscore
+            $key = str_replace(' ', '_', $kriteria);
+            $newMatriksNilaiPrioritasSubkriteria[$key] = $nilaiSubkriteria;
+        }
+
+        // PERHITUNGAN ALTERNATIF
+        $dataAlternatif = Alternatif::all();
+
+        // dd($newMatriksNilaiPrioritasSubkriteria, $dataAlternatif->toArray());
+
+        $hasil = [];
+
+        foreach ($dataAlternatif as $alternatif) {
+            $nilaiSubkriteria = [];
+
+            foreach ($alternatif['data'] as $kriteria => $nilaiKriteria) {
+                $nilaiSubkriteria[$kriteria] = $newMatriksNilaiPrioritasSubkriteria[$kriteria][$nilaiKriteria];
+            }
+
+            $hasil[] = $nilaiSubkriteria;
+        }
+
+        $hasilAkhir = [];
+
+        foreach ($hasil as $indexA => $data) {
+            $hasilKriteria = [];
+
+            $dataValues = array_values($data);
+
+            foreach ($dataValues as $indexB => $nilai) {
+                $hasilKriteria[$indexB] = $nilai * $nilaiPrioritas[$indexB];
+            }
+
+            $hasilAkhir[] = $hasilKriteria;
+        }
+
+        $totalNilai = [];
+
+        foreach ($hasilAkhir as $indexA => $data) {
+            $total = 0;
+
+            foreach ($data as $indexB => $value) {
+                $total += $value;
+            }
+
+            $totalNilai[] = $total;
+        }
+
+        return $totalNilai;
     }
 }
