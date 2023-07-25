@@ -128,7 +128,7 @@
                                 <th>{{ $kriteria->nama }}</th>
                             @endforeach --}}
                             <th>Total</th>
-                            <th>Ranking</th>
+                            {{-- <th>Ranking</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +139,7 @@
                                     <td>{{ $value }}</td>
                                 @endforeach --}}
                                 <td>{{ $hasil['total'] }}</td>
-                                <td>{{ $loop->iteration }}</td>
+                                {{-- <td>{{ $loop->iteration }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>
