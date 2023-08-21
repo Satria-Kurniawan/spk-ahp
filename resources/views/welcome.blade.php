@@ -318,7 +318,7 @@ https://templatemo.com/tm-570-chain-app-dev
                     <div class="naccs">
                         <div class="grid">
                             <div class="row">
-                                <div class="col-lg-7 align-self-center">
+                                <div class="col-lg-12 align-self-center">
                                     <div class="">
                                         <div>
                                             <div class="thumb">
@@ -342,7 +342,7 @@ https://templatemo.com/tm-570-chain-app-dev
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 mb-5">
+                                            <div class="col-lg-4 mb-5">
                                                 <div class="service-item first-service">
                                                     <div class="p-3 text-black">
                                                         <h5 class="mb-3">Informasi 1</h5>
@@ -351,7 +351,7 @@ https://templatemo.com/tm-570-chain-app-dev
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 mb-5">
+                                            <div class="col-lg-4 mb-5">
                                                 <div class="service-item first-service">
                                                     <div class="p-3 text-black">
                                                         <h5 class="mb-3">Informasi 2</h5>
@@ -360,7 +360,7 @@ https://templatemo.com/tm-570-chain-app-dev
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 mb-5">
+                                            <div class="col-lg-4 mb-5">
                                                 <div class="service-item first-service">
                                                     <div class="p-3 text-black">
                                                         <h5 class="mb-3">Informasi 3</h5>
@@ -369,7 +369,25 @@ https://templatemo.com/tm-570-chain-app-dev
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 mb-5">
+                                            <div class="col-lg-4 mb-5">
+                                                <div class="service-item first-service">
+                                                    <div class="p-3 text-black">
+                                                        <h5 class="mb-3">Informasi 4</h5>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Reprehenderit, quo.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 mb-5">
+                                                <div class="service-item first-service">
+                                                    <div class="p-3 text-black">
+                                                        <h5 class="mb-3">Informasi 4</h5>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                                        Reprehenderit, quo.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 mb-5">
                                                 <div class="service-item first-service">
                                                     <div class="p-3 text-black">
                                                         <h5 class="mb-3">Informasi 4</h5>
@@ -467,7 +485,7 @@ https://templatemo.com/tm-570-chain-app-dev
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
-                                    <ul class="nacc">
+                                    {{-- <ul class="nacc">
                                         <li class="active">
                                             <div>
                                                 <div class="thumb">
@@ -479,132 +497,16 @@ https://templatemo.com/tm-570-chain-app-dev
                                                                     frameborder="0"
                                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                                     allowfullscreen></iframe>
-                                                                {{-- <img src="assets/images/quote.png" alt="">
-                                                                <p>“Lorem ipsum dolor sit amet, consectetur adpiscing
-                                                                    elit, sed do eismod tempor idunte ut labore et
-                                                                    dolore magna aliqua darwin kengan
-                                                                    lorem ipsum dolor sit amet, consectetur picing elit
-                                                                    massive big blasta.”</p> --}}
+
                                                             </div>
-                                                            {{-- <div class="down-content">
-                                                                <img src="{{ asset('template') }}/assets/images/client-image.jpg"
-                                                                    alt="">
-                                                                <div class="right-content">
-                                                                    <h4>David Martino</h4>
-                                                                    <span>CEO of David Company</span>
-                                                                </div>
-                                                            </div> --}}
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        {{-- <li>
-                                            <div>
-                                                <div class="thumb">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="client-content">
-                                                                <img src="assets/images/quote.png" alt="">
-                                                                <p>“CTO, Lorem ipsum dolor sit amet, consectetur
-                                                                    adpiscing elit, sed do eismod tempor idunte ut
-                                                                    labore et dolore magna aliqua darwin kengan
-                                                                    lorem ipsum dolor sit amet, consectetur picing elit
-                                                                    massive big blasta.”</p>
-                                                            </div>
-                                                            <div class="down-content">
-                                                                <img src="assets/images/client-image.jpg"
-                                                                    alt="">
-                                                                <div class="right-content">
-                                                                    <h4>Jake H. Nyo</h4>
-                                                                    <span>CTO of Digital Company</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <div class="thumb">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="client-content">
-                                                                <img src="assets/images/quote.png" alt="">
-                                                                <p>“May, Lorem ipsum dolor sit amet, consectetur
-                                                                    adpiscing elit, sed do eismod tempor idunte ut
-                                                                    labore et dolore magna aliqua darwin kengan
-                                                                    lorem ipsum dolor sit amet, consectetur picing elit
-                                                                    massive big blasta.”</p>
-                                                            </div>
-                                                            <div class="down-content">
-                                                                <img src="{{ asset('template') }}/assets/images/client-image.jpg"
-                                                                    alt="">
-                                                                <div class="right-content">
-                                                                    <h4>May C.</h4>
-                                                                    <span>Founder of Catherina Co.</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <div class="thumb">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="client-content">
-                                                                <img src="{{ asset('template') }}/assets/images/quote.png"
-                                                                    alt="">
-                                                                <p>“Lorem ipsum dolor sit amet, consectetur adpiscing
-                                                                    elit, sed do eismod tempor idunte ut labore et
-                                                                    dolore magna aliqua darwin kengan
-                                                                    lorem ipsum dolor sit amet, consectetur picing elit
-                                                                    massive big blasta.”</p>
-                                                            </div>
-                                                            <div class="down-content">
-                                                                <img src="assets/images/client-image.jpg"
-                                                                    alt="">
-                                                                <div class="right-content">
-                                                                    <h4>Random Staff</h4>
-                                                                    <span>Manager, Digital Company</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <div class="thumb">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="client-content">
-                                                                <img src="assets/images/quote.png" alt="">
-                                                                <p>“Mark, Lorem ipsum dolor sit amet, consectetur
-                                                                    adpiscing elit, sed do eismod tempor idunte ut
-                                                                    labore et dolore magna aliqua darwin kengan
-                                                                    lorem ipsum dolor sit amet, consectetur picing elit
-                                                                    massive big blasta.”</p>
-                                                            </div>
-                                                            <div class="down-content">
-                                                                <img src="{{ asset('template') }}/assets/images/client-image.jpg"
-                                                                    alt="">
-                                                                <div class="right-content">
-                                                                    <h4>Mark Am</h4>
-                                                                    <span>CTO, Amber Do Company</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li> --}}
-                                    </ul>
+
+                                    </ul> --}}
                                 </div>
                             </div>
                         </div>

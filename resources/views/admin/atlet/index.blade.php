@@ -25,6 +25,7 @@
                             <th>No</th>
                             <th>Nama Atlet</th>
                             <th>Hasil</th>
+                            <th>Tanggal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +34,14 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->rekomendasi }}</td>
+                                @php
+                                    $tanggalWaktu = $item->created_at;
+                                    
+                                    $dateTimeObj = new DateTime($tanggalWaktu);
+                                    
+                                    $formatTanggal = $dateTimeObj->format('d F Y h:i A');
+                                @endphp
+                                <td>{{ $formatTanggal }}</td>
                             </tr>
                         @endforeach
                     </tbody>
