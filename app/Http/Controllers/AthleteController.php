@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternatif;
 use App\Models\Athlete;
 use App\Models\Kriteria;
 use App\Models\MatriksBerpasangan;
@@ -11,14 +12,16 @@ use Illuminate\Http\Request;
 
 class AthleteController extends Controller
 {
-    public function createAtlet(){
+    public function createAtlet()
+    {
         $dataKriteria = Kriteria::all();
         $dataSubkriteria = SubKriteria::all();
 
         return view('admin.atlet.create', compact('dataKriteria', 'dataSubkriteria'));
     }
 
-    public function storeAtlet(Request $req){
+    public function storeAtlet(Request $req)
+    {
         // INPUT
         $data = $req->all();
 
@@ -28,7 +31,7 @@ class AthleteController extends Controller
         $data = array_map('strval', $data);
 
         $validatedData = $req->validate([
-            'nama' => 'required|string|unique:athletes'
+            'nama' => 'required|string'
         ]);
         // END
 
@@ -41,7 +44,7 @@ class AthleteController extends Controller
         $nilaiPrioritas = $resultMatriksNilaiKriteria['nilaiPrioritas'];
         // END
 
-         //MATRIKS NILAI PRIORITAS SUBKRITERIA
+        //MATRIKS NILAI PRIORITAS SUBKRITERIA
         $dataSubkriteria = SubKriteria::all();
         $matriksBerpasanganSK = MatriksBerpasanganSubkriteria::all();
 
@@ -96,24 +99,35 @@ class AthleteController extends Controller
 
         $nilaiRekomendasi = PerhitunganController::hitungNilaiRekomendasi();
 
-        if($total >= $nilaiRekomendasi[0]){
+        if ($total >= $nilaiRekomendasi[0]) {
             $rekomendasi = "Atlet Utama";
-        }else if($total >= $nilaiRekomendasi[1]) {
+        } else if ($total >= $nilaiRekomendasi[1]) {
             $rekomendasi = "Atlet Binaan";
-        }else {
+        } else {
             $rekomendasi = "Atlet Pemula";
         }
 
-        Athlete::create([
-            'nama' => $validatedData['nama'],
-            'data' => $data,
-            'rekomendasi' => $rekomendasi
-        ]);
+        $athleteExists = Athlete::where('nama', $validatedData['nama'])->first();
+
+        if ($athleteExists) {
+            $athleteExists->update([
+                'nama' => $validatedData['nama'],
+                'data' => $data,
+                'rekomendasi' => $rekomendasi
+            ]);
+        } else {
+            Athlete::create([
+                'nama' => $validatedData['nama'],
+                'data' => $data,
+                'rekomendasi' => $rekomendasi
+            ]);
+        }
 
         return redirect()->back()->with('nama', $req->input('nama'))->with('rekomendasi', $rekomendasi);
     }
 
-    public function getDataRekapan(){
+    public function getDataRekapan()
+    {
         $dataRekapan = Athlete::all();
 
         return view('admin.atlet.index', compact('dataRekapan'));

@@ -12,12 +12,14 @@ use Illuminate\Http\Request;
 
 class PerhitunganController extends Controller
 {
-    public function getDataPerhitungan(){
+    public function getDataPerhitungan()
+    {
         // MATRIKS NILAI PRIORITAS KRITERIA
         $dataKriteria = Kriteria::all();
         $matriksBerpasangan = MatriksBerpasangan::all();
 
         $jumlahPerKolom = $this->hitungJumlahPerkolom($dataKriteria, $matriksBerpasangan);
+
         $resultMatriksNilaiKriteria = $this->hitungMatriksNilaiKriteria($dataKriteria, $matriksBerpasangan, $jumlahPerKolom);
         $nilaiPrioritas = $resultMatriksNilaiKriteria['nilaiPrioritas'];
         // END
@@ -107,7 +109,7 @@ class PerhitunganController extends Controller
             ];
         }
 
-        usort($hasilPerankingan, function($a, $b) {
+        usort($hasilPerankingan, function ($a, $b) {
             return $b['total'] <=> $a['total'];
         });
         // END
@@ -124,7 +126,8 @@ class PerhitunganController extends Controller
         ));
     }
 
-    public static function hitungJumlahPerkolom($dataKriteria, $matriksBerpasangan){
+    public static function hitungJumlahPerkolom($dataKriteria, $matriksBerpasangan)
+    {
         $jumlahKolom = count($dataKriteria);
         $jumlahPerKolom = array_fill(0, $jumlahKolom, 0);
 
@@ -140,7 +143,8 @@ class PerhitunganController extends Controller
         return $jumlahPerKolom;
     }
 
-    public static function hitungMatriksNilaiKriteria($dataKriteria, $matriksBerpasangan, $jumlahPerKolom){
+    public static function hitungMatriksNilaiKriteria($dataKriteria, $matriksBerpasangan, $jumlahPerKolom)
+    {
         // Mencari matriks nilai kriteria
         $matriksNilaiKriteria = [];
 
@@ -188,7 +192,8 @@ class PerhitunganController extends Controller
         ];
     }
 
-    public static function hitungNilaiRekomendasi(){
+    public static function hitungNilaiRekomendasi()
+    {
         // MATRIKS NILAI PRIORITAS KRITERIA
         $dataKriteria = Kriteria::all();
         $matriksBerpasangan = MatriksBerpasangan::all();

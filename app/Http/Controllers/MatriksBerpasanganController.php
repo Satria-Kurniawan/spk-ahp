@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class MatriksBerpasanganController extends Controller
 {
-    public static function getDataMatriksBerpasangan($dataKriteria){
+    public static function getDataMatriksBerpasangan($dataKriteria)
+    {
         $matriksBerpasangan = [];
 
         foreach ($dataKriteria as $indexA => $kriteriaA) {

@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class KriteriaController extends Controller
 {
-    public function getDataKriteria(){
+    public function getDataKriteria()
+    {
         $dataKriteria = Kriteria::all();
         $matriksBerpasangan = MatriksBerpasangan::all();
 
         // Menghitung jumlah nilai perkolom pada matriks berpasangan
         $jumlahPerKolom = PerhitunganController::hitungJumlahPerkolom($dataKriteria, $matriksBerpasangan);
+        // dd($jumlahPerKolom);
         // End
 
         // Menghitung matriks nilai kriteria
@@ -22,6 +24,14 @@ class KriteriaController extends Controller
         $jumlahPerBaris = $resultMatriksNilaiKriteria['jumlahPerBaris'];
         $nilaiPrioritas = $resultMatriksNilaiKriteria['nilaiPrioritas'];
         // End
+
+        $resultArray = array_map(function ($value1, $value2) {
+            return $value1 * $value2;
+        }, $jumlahPerKolom, $resultMatriksNilaiKriteria['nilaiPrioritas']);
+
+        // dd($resultArray);
+
+        $lambdaMax = array_sum($resultArray);
 
         // Mencari matriks penjumlahan tiap baris
         // Ubah data matriks berpasangan jadi matriks 2 dimensi
@@ -68,13 +78,13 @@ class KriteriaController extends Controller
         $totalHasilPenjumlahanRasioKonsistensi = array_sum($hasilPenjumlahanRasioKonsistensi);
         $n = count($dataKriteria);
 
-        if($n === 0 || $n === 1 || count($matriksBerpasangan) === 0 ){
+        if ($n === 0 || $n === 1 || count($matriksBerpasangan) === 0) {
             $lambdaMax = 0;
             $CI = 0;
             $CR = 0;
             $keterangan = '';
-        }else {
-            $lambdaMax = $totalHasilPenjumlahanRasioKonsistensi / $n;
+        } else {
+            // $lambdaMax = $totalHasilPenjumlahanRasioKonsistensi / $n;
             $CI = ($lambdaMax - $n) / ($n - 1);
 
             $nilaiIR = [
@@ -115,11 +125,13 @@ class KriteriaController extends Controller
         ));
     }
 
-    public function createKriteria(){
+    public function createKriteria()
+    {
         return view('admin.kriteria.create');
     }
 
-    public function storeKriteria(Request $req){
+    public function storeKriteria(Request $req)
+    {
         $validatedData = $req->validate([
             'nama' => 'required'
         ]);
@@ -129,13 +141,15 @@ class KriteriaController extends Controller
         return redirect()->route('kriteria.data')->with('success', "Berhasil menambahkan kriteria.");
     }
 
-    public function editKriteria($id){
+    public function editKriteria($id)
+    {
         $kriteria = Kriteria::findOrFail($id);
 
         return view('admin.kriteria.edit', compact('kriteria'));
     }
 
-    public function updateKriteria(Request $req, $id){
+    public function updateKriteria(Request $req, $id)
+    {
         $kriteria = Kriteria::findOrFail($id);
 
         $validatedData = $req->validate([
@@ -147,11 +161,12 @@ class KriteriaController extends Controller
         return redirect()->route('kriteria.data')->with('success', "Berhasil memperbarui kriteria.");
     }
 
-    public function deleteKriteria($id){
+    public function deleteKriteria($id)
+    {
         $kriteria = Kriteria::findOrFail($id);
         $matriksBerpasangan = MatriksBerpasangan::where(function ($query) use ($kriteria) {
             $query->where('kriteria_1', $kriteria->nama)
-                  ->orWhere('kriteria_2', $kriteria->nama);
+                ->orWhere('kriteria_2', $kriteria->nama);
         });
 
         $matriksBerpasangan->delete();

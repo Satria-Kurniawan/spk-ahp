@@ -24,11 +24,12 @@ function hitungJumlahPerkolomMatriksBerpasangan($dataSubkriteria, $idKriteria, $
     return $jumlah;
 }
 
-function hitungMatriksNilaiKriteria($dataSubkriteria, $idKriteria, $matriksBerpasangan, $jumlahPerKolom){
+function hitungMatriksNilaiKriteria($dataSubkriteria, $idKriteria, $matriksBerpasangan, $jumlahPerKolom)
+{
     $data = $dataSubkriteria->where('id_kriteria', $idKriteria);
     $matriks = $matriksBerpasangan->where('id_kriteria', $idKriteria);
 
-    if(count($matriks) === 0){
+    if (count($matriks) === 0) {
         return [
             'matriksNilaiKriteria' => [],
             'jumlahPerBaris' => [],
@@ -77,9 +78,9 @@ function hitungMatriksNilaiKriteria($dataSubkriteria, $idKriteria, $matriksBerpa
     $jumlahSubkriteria = count($data);
 
     foreach ($jumlahPerBaris as $index => $jumlah) {
-        if($jumlahSubkriteria !== 0){
+        if ($jumlahSubkriteria !== 0) {
             $nilaiPriority = $jumlahPerBaris[$index] / $jumlahSubkriteria;
-        }else {
+        } else {
             $nilaiPriority = 0;
         }
 
@@ -91,9 +92,9 @@ function hitungMatriksNilaiKriteria($dataSubkriteria, $idKriteria, $matriksBerpa
     $nilaiMax = max($nilaiPrioritas);
 
     foreach ($nilaiPrioritas as $value) {
-        if($nilaiMax !== 0){
+        if ($nilaiMax !== 0) {
             $nilaiPrioritasSubkriteria[] = $value / $nilaiMax;
-        }else {
+        } else {
             $nilaiPrioritasSubkriteria[] = 0;
         }
     }
@@ -106,11 +107,12 @@ function hitungMatriksNilaiKriteria($dataSubkriteria, $idKriteria, $matriksBerpa
     );
 }
 
-function hitungMatriksPenjumlahanTiapBaris($dataSubkriteria, $idKriteria, $matriksBerpasangan, $nilaiPrioritas){
+function hitungMatriksPenjumlahanTiapBaris($dataSubkriteria, $idKriteria, $matriksBerpasangan, $nilaiPrioritas)
+{
     $dataSub = $dataSubkriteria->where('id_kriteria', $idKriteria)->values();
     $matriksBerp = $matriksBerpasangan->where('id_kriteria', $idKriteria)->values();
 
-    if(count($dataSub) === 0 || count($matriksBerp) === 0 || count($nilaiPrioritas) === 0) {
+    if (count($dataSub) === 0 || count($matriksBerp) === 0 || count($nilaiPrioritas) === 0) {
         return [
             'matriksPenjumlahanTiapBaris' => [],
             'hasilPenjumlahanTiapBaris' => []
@@ -154,9 +156,10 @@ function hitungMatriksPenjumlahanTiapBaris($dataSubkriteria, $idKriteria, $matri
     );
 }
 
-function hitungRasioKonsistensi($hasilPenjumlahanTiapBaris, $nilaiPrioritas, $dataSubkriteria){
+function hitungRasioKonsistensi($hasilPenjumlahanTiapBaris, $nilaiPrioritas, $dataSubkriteria, $jumlahPerKolom)
+{
 
-    if(count($hasilPenjumlahanTiapBaris) === 0 || count($nilaiPrioritas) === 0 || count($dataSubkriteria) === 0) {
+    if (count($hasilPenjumlahanTiapBaris) === 0 || count($nilaiPrioritas) === 0 || count($dataSubkriteria) === 0) {
         return [
             'hasilPenjumlahanRasioKonsistensi' => [],
             'totalHasilPenjumlahanRasioKonsistensi' => 0,
@@ -168,40 +171,50 @@ function hitungRasioKonsistensi($hasilPenjumlahanTiapBaris, $nilaiPrioritas, $da
         ];
     }
 
-     $hasilPenjumlahanRasioKonsistensi = [];
+    $hasilPenjumlahanRasioKonsistensi = [];
 
-     foreach ($hasilPenjumlahanTiapBaris as $index => $value) {
+    foreach ($hasilPenjumlahanTiapBaris as $index => $value) {
         if (isset($nilaiPrioritas[$index])) {
             $hasil = $value + $nilaiPrioritas[$index];
             $hasilPenjumlahanRasioKonsistensi[$index] = $hasil;
         }
-     }
+    }
 
-      // Hasil perhitungan akhir
-      $totalHasilPenjumlahanRasioKonsistensi = array_sum($hasilPenjumlahanRasioKonsistensi);
-      $n = count($dataSubkriteria);
-      $lambdaMax = $totalHasilPenjumlahanRasioKonsistensi / $n;
-      $CI = ($lambdaMax - $n) / ($n - 1);
+    // dd($jumlahPerKolom, $nilaiPrioritas);
 
-      $nilaiIR = [
-          1 => 0,
-          2 => 0,
-          3 => 0.58,
-          4 => 0.90,
-          5 => 1.12,
-          6 => 1.24,
-          7 => 1.32,
-          8 => 1.41,
-          9 => 1.45,
-          10 => 1.49
-      ];
+    $resultArray = array_map(function ($value1, $value2) {
+        return $value1 * $value2;
+    }, $jumlahPerKolom->toArray(), $nilaiPrioritas);
 
-      $CR = $nilaiIR[$n] !== 0 ? $CI / $nilaiIR[$n] : 0;
+    // dd($resultArray);
 
-      $keterangan = $CR <= 0.1 ? 'Konsisten' : 'Tidak Konsisten';
-      // End
+    $lambdaMax = array_sum($resultArray);
 
-     return compact(
+    // Hasil perhitungan akhir
+    $totalHasilPenjumlahanRasioKonsistensi = array_sum($hasilPenjumlahanRasioKonsistensi);
+    $n = count($dataSubkriteria);
+    // $lambdaMax = $totalHasilPenjumlahanRasioKonsistensi / $n;
+    $CI = ($lambdaMax - $n) / ($n - 1);
+
+    $nilaiIR = [
+        1 => 0,
+        2 => 0,
+        3 => 0.58,
+        4 => 0.90,
+        5 => 1.12,
+        6 => 1.24,
+        7 => 1.32,
+        8 => 1.41,
+        9 => 1.45,
+        10 => 1.49
+    ];
+
+    $CR = $nilaiIR[$n] !== 0 ? $CI / $nilaiIR[$n] : 0;
+
+    $keterangan = $CR <= 0.1 ? 'Konsisten' : 'Tidak Konsisten';
+    // End
+
+    return compact(
         'hasilPenjumlahanRasioKonsistensi',
         'totalHasilPenjumlahanRasioKonsistensi',
         'n',

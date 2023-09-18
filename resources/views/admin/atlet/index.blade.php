@@ -39,7 +39,7 @@
                                     
                                     $dateTimeObj = new DateTime($tanggalWaktu);
                                     
-                                    $formatTanggal = $dateTimeObj->format('d F Y h:i A');
+                                    $formatTanggal = $dateTimeObj->format('d F Y');
                                 @endphp
                                 <td>{{ $formatTanggal }}</td>
                             </tr>

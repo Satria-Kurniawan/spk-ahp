@@ -133,6 +133,7 @@
                 $result = hitungMatriksNilaiKriteria($dataSubkriteria, $kriteria->id, $matriksBerpasangan, $jumlahPerKolom);
                 $matriksNilaiKriteria = $result['matriksNilaiKriteria'];
                 $jumlahPerBaris = $result['jumlahPerBaris'];
+            
                 $nilaiPrioritas = $result['nilaiPrioritas'];
                 $nilaiPrioritasSubkriteria = $result['nilaiPrioritasSubkriteria'];
             
@@ -142,7 +143,7 @@
             
                 $dataSubK = $dataSubkriteria->where('id_kriteria', $kriteria->id)->values();
             
-                $result3 = hitungRasioKonsistensi($hasilPenjumlahanTiapBaris, $nilaiPrioritas, $dataSubK);
+                $result3 = hitungRasioKonsistensi($hasilPenjumlahanTiapBaris, $nilaiPrioritas, $dataSubK, $jumlahPerKolom);
                 $hasilPenjumlahanRasioKonsistensi = $result3['hasilPenjumlahanRasioKonsistensi'];
                 $totalHasilPenjumlahanRasioKonsistensi = $result3['totalHasilPenjumlahanRasioKonsistensi'];
                 $n = $result3['n'];
